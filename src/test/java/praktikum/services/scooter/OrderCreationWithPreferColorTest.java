@@ -5,6 +5,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -18,22 +19,16 @@ public class OrderCreationWithPreferColorTest {
     private final OrderDataRequest orderRequestData;
     int orderId;
     Track track;
-    private RequestLoggingFilter requestFilter;
-    private ResponseLoggingFilter responseFilter;
+    private RequestLoggingFilter requestFilter = new RequestLoggingFilter();
+    private ResponseLoggingFilter responseFilter = new ResponseLoggingFilter();
 
     public OrderCreationWithPreferColorTest(OrderDataRequest orderRequestData) {
         this.orderRequestData = orderRequestData;
     }
-
-    @Before
-    public void setUp() {
-
+    @BeforeClass
+    public static void baseUri() {
         RestAssured.baseURI = "http://qa-scooter.praktikum-services.ru/";
-        requestFilter = new RequestLoggingFilter();
-        responseFilter = new ResponseLoggingFilter();
-
     }
-
     @Parameterized.Parameters
     public static Object[] newOrderNumber() {
         return new Object[] {
